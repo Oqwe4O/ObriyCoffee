@@ -1,0 +1,26 @@
+---
+const steps = [
+  { day: 'Пн', title: 'Приймаємо заявки', text: 'Замовлення до 18:00 їде цим тижнем.' },
+  { day: 'Вт', title: 'Смажимо', text: 'Рівно стільки, скільки замовили.' },
+  { day: 'Ср', title: 'Відправляємо', text: 'Пакуємо і передаємо Новій Пошті.' },
+  { day: 'Чт', title: 'Ви п’єте каву', text: 'Посилка у відділенні за 1–2 дні.' },
+];
+---
+
+<section id="process" class="scroll-mt-6 border-y-2 border-ink bg-cream">
+  <div class="mx-auto max-w-6xl px-4 py-16 md:px-8 md:py-24">
+    <h2 class="font-display text-3xl font-bold md:text-4xl">Один тиждень партії</h2>
+
+    <ol class="mt-10 grid gap-8 sm:grid-cols-2 md:grid-cols-4">
+      {
+        steps.map((step) => (
+          <li data-reveal>
+            <span class="flex h-14 w-14 items-center justify-center rounded-full bg-sun font-display font-bold">{step.day}</span>
+            <h3 class="mt-4 font-display font-semibold">{step.title}</h3>
+            <p class="mt-2 text-muted">{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+---
+const links = [
+  { href: '#coffee', label: 'Кава' },
+  { href: '#process', label: 'Як це працює' },
+  { href: '#faq', label: 'Питання' },
+];
+---
+
+<header class="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 md:px-8">
+  <a href="#top" class="font-display text-xl font-bold">обрій</a>
+
+  <nav class="hidden gap-8 font-semibold md:flex" aria-label="Основна навігація">
+    {links.map((link) => <a href={link.href} class="hover:text-sun">{link.label}</a>)}
+  </nav>
+
+  <a href="#order" class="rounded-full border-2 border-ink px-4 py-2 text-sm font-bold transition-colors hover:bg-ink hover:text-paper">
+    Замовити
+  </a>
+</header>

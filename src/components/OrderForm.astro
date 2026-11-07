@@ -1,0 +1,93 @@
+---
+import { coffees, grinds, weights } from '../data/coffees';
+
+const fieldClass = 'mt-1.5 w-full rounded-lg border-2 border-paper/30 bg-transparent px-4 py-3 text-paper focus:border-sun focus:outline-none';
+---
+
+<section id="order" class="scroll-mt-6 bg-ink text-paper">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-2 md:px-8 md:py-24">
+    <div>
+      <h2 class="font-display text-3xl font-bold md:text-4xl">Залиште заявку</h2>
+      <p class="mt-4 max-w-sm text-paper/80">
+        Ми зателефонуємо протягом дня, уточнимо деталі й надішлемо посилання на оплату.
+      </p>
+    </div>
+
+    <form id="order-form" class="grid gap-5 sm:grid-cols-2">
+      <label class="font-semibold">
+        Ім’я
+        <input name="name" required maxlength="80" autocomplete="name" class={fieldClass} />
+      </label>
+
+      <label class="font-semibold">
+        Телефон
+        <input name="phone" type="tel" required autocomplete="tel" placeholder="+380" class={fieldClass} />
+      </label>
+
+      <label class="font-semibold sm:col-span-2">
+        Кава
+        <select id="order-coffee" name="coffee" class={fieldClass}>
+          {coffees.map((coffee) => <option value={coffee.slug} class="text-ink">{coffee.name}, {coffee.region}</option>)}
+        </select>
+      </label>
+
+      <label class="font-semibold">
+        Вага
+        <select id="order-weight" name="weight" class={fieldClass}>
+          {weights.map((weight) => <option value={weight.id} class="text-ink">{weight.label}</option>)}
+        </select>
+      </label>
+
+      <label class="font-semibold">
+        Помел
+        <select name="grind" class={fieldClass}>
+          {grinds.map((grind) => <option class="text-ink">{grind}</option>)}
+        </select>
+      </label>
+
+      <label class="font-semibold sm:col-span-2">
+        Коментар
+        <textarea name="comment" rows="3" maxlength="500" class={fieldClass}></textarea>
+      </label>
+
+      <input name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+
+      <div class="sm:col-span-2">
+        <button type="submit" class="w-full cursor-pointer rounded-full bg-sun px-8 py-4 font-bold text-ink transition-colors hover:bg-paper disabled:opacity-60 sm:w-auto">
+          Надіслати заявку
+        </button>
+        <p id="order-status" role="status" class="mt-4 font-semibold"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#order-form');
+  const statusText = document.querySelector('#order-status');
+  const button = form?.querySelector('button');
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!statusText || !button) return;
+
+    button.disabled = true;
+    statusText.textContent = 'Надсилаємо...';
+
+    try {
+      const response = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const result = await response.json();
+
+      statusText.textContent = result.message;
+      if (response.ok) form.reset();
+    } catch {
+      statusText.textContent = 'Не вдалося надіслати заявку. Перевірте інтернет і спробуйте ще раз.';
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>

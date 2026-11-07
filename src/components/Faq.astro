@@ -1,0 +1,21 @@
+---
+import { faq } from '../data/faq';
+---
+
+<section id="faq" class="mx-auto max-w-3xl scroll-mt-6 px-4 py-16 md:py-24">
+  <h2 class="font-display text-3xl font-bold md:text-4xl">Часті питання</h2>
+
+  <div class="mt-8 border-t-2 border-ink">
+    {
+      faq.map((item) => (
+        <details class="group border-b-2 border-ink py-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-bold">
+            {item.question}
+            <span class="font-display text-2xl transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <p class="mt-3 text-muted">{item.answer}</p>
+        </details>
+      ))
+    }
+  </div>
+</section>

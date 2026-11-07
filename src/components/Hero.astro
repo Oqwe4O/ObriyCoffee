@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import { coffees } from '../data/coffees';
+
+const heroCoffee = coffees[0];
+const minPrice = Math.min(...coffees.map((coffee) => coffee.prices['250']));
+const facts = ['Смажимо щовівторка', 'Нова Пошта за 1–2 дні', `Від ${minPrice} грн за пачку`];
+---
+
+<section class="relative overflow-hidden border-b-2 border-ink">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 pt-8 md:grid-cols-2 md:items-end md:px-8 md:pt-16">
+    <div class="md:pb-20">
+      <h1 class="font-display text-4xl leading-[1.1] font-bold md:text-6xl">Кава, яку смажили цього тижня</h1>
+      <p class="mt-6 max-w-md text-lg text-muted">
+        Маленька обсмажка зі Львова. Три сорти, свіжі партії щотижня і доставка Новою Поштою по всій Україні.
+      </p>
+      <a href="#coffee" class="mt-8 inline-block rounded-full bg-sun px-8 py-4 font-bold transition-colors hover:bg-ink hover:text-paper">
+        Обрати каву
+      </a>
+      <ul class="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold">
+        {facts.map((fact) => <li>{fact}</li>)}
+      </ul>
+    </div>
+
+    <div class="relative flex h-80 items-end justify-center md:h-[34rem]">
+      <div class="sunrise absolute bottom-0 left-1/2 aspect-square w-[22rem] rounded-full bg-sun md:w-[36rem]"></div>
+      <Image
+        src={heroCoffee.image}
+        alt={`Пачка кави ${heroCoffee.name} ${heroCoffee.region}`}
+        width={680}
+        loading="eager"
+        class="relative h-72 w-auto -rotate-3 md:h-[30rem]"
+      />
+    </div>
+  </div>
+</section>

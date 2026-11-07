@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import { weights, type Coffee } from '../data/coffees';
+
+interface Props {
+  coffee: Coffee;
+}
+
+const { coffee } = Astro.props;
+---
+
+<article data-reveal data-coffee={coffee.slug} class="flex flex-col rounded-2xl bg-cream p-6">
+  <Image src={coffee.image} alt={`Пачка кави ${coffee.name} ${coffee.region}`} width={400} class="mx-auto h-64 w-auto" />
+
+  <h3 class="mt-6 font-display text-xl font-bold">{coffee.name}, {coffee.region}</h3>
+  <p class="mt-1 text-sm font-semibold text-muted">{coffee.roastLabel}</p>
+  <p class="mt-4 font-semibold">{coffee.notes.join(' · ')}</p>
+  <p class="mt-1 text-muted">{coffee.brew}</p>
+
+  <div class="mt-auto pt-6">
+    <fieldset class="flex gap-2">
+      <legend class="sr-only">Вага пачки</legend>
+      {
+        weights.map((weight, index) => (
+          <label class="cursor-pointer rounded-full border-2 border-ink px-4 py-1.5 text-sm font-bold has-checked:bg-ink has-checked:text-paper has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-sun">
+            <input
+              type="radio"
+              name={`weight-${coffee.slug}`}
+              value={weight.id}
+              data-price={coffee.prices[weight.id]}
+              checked={index === 0}
+              class="sr-only"
+            />
+            {weight.label}
+          </label>
+        ))
+      }
+    </fieldset>
+
+    <div class="mt-5 flex flex-wrap items-center justify-between gap-4">
+      <p class="font-display text-2xl font-bold whitespace-nowrap"><span data-price-value>{coffee.prices['250']}</span> грн</p>
+      <a href="#order" data-order-button class="rounded-full bg-sun px-5 py-2.5 font-bold transition-colors hover:bg-ink hover:text-paper">
+        Замовити
+      </a>
+    </div>
+  </div>
+</article>

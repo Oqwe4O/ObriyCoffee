@@ -1,0 +1,29 @@
+---
+const benefits = [
+  {
+    title: 'Дата на кожній пачці',
+    text: 'Ви завжди бачите, коли каву обсмажили. Жодних партій, які місяцями лежать на складі.',
+  },
+  {
+    title: 'Смажимо під замовлення',
+    text: 'Збираємо заявки за тиждень і смажимо рівно стільки, скільки потрібно.',
+  },
+  {
+    title: 'Знаємо походження',
+    text: 'Працюємо зі спешелті-зерном і знаємо ферму та регіон кожного лоту.',
+  },
+];
+---
+
+<section class="bg-ink text-paper">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-3 md:px-8 md:py-20">
+    {
+      benefits.map((benefit) => (
+        <div data-reveal class="border-t-2 border-sun pt-5">
+          <h2 class="font-display text-lg font-semibold">{benefit.title}</h2>
+          <p class="mt-3 text-paper/80">{benefit.text}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
