@@ -5,6 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
+  site: 'https://obriy-coffee.vercel.app',
+
   vite: {
     plugins: [tailwindcss()]
   },
